@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ImageConvert Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap)" rel="stylesheet"/>
+  <link rel="stylesheet" href="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css)"/>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fa-solid fa-images"></i>
+        <span>ImgConvert</span>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">MAIN</div>
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <i class="fa-solid fa-gauge-high"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-page="convert">
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        <span>Convert Image</span>
+      </a>
+      <a href="#" class="nav-item" data-page="history">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>History</span>
+      </a>
+
+      <div class="nav-section-label">TOOLS</div>
+      <a href="#" class="nav-item" data-page="batch">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Batch Convert</span>
+      </a>
+      <a href="#" class="nav-item" data-page="compress">
+        <i class="fa-solid fa-compress"></i>
+        <span>Compress</span>
+      </a>
+      <a href="#" class="nav-item" data-page="settings">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="storage-info">
+        <div class="storage-header">
+          <i class="fa-solid fa-hard-drive"></i>
+          <span>Storage Used</span>
+        </div>
+        <div class="storage-bar">
+          <div class="storage-fill" style="width: 42%"></div>
+        </div>
+        <small>2.1 GB / 5 GB</small>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" id="menuBtn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="breadcrumb">
+          <span id="breadcrumbText">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="icon-btn">
+          <i class="fa-solid fa-bell"></i>
+          <span class="badge">3</span>
+        </button>
+        <div class="avatar" title="User">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Pages -->
+    <main class="content">
+
+      <!-- DASHBOARD PAGE -->
+      <section class="page active" id="page-dashboard">
+        <div class="page-header">
+          <h1>Welcome back 👋</h1>
+          <p>Manage and convert your images effortlessly.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card" style="--accent:#6c63ff">
+            <div class="stat-icon"><i class="fa-solid fa-image"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="totalConverted">0</span>
+              <span class="stat-label">Total Converted</span>
+            </div>
+            <div class="stat-trend up"><i class="fa-solid fa-arrow-trend-up"></i> 12%</div>
+          </div>
+          <div class="stat-card" style="--accent:#22d3ee">
+            <div class="stat-icon"><i class="fa-solid fa-file-image"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="totalFiles">0</span>
+              <span class="stat-label">Files Processed</span>
+            </div>
+            <div class="stat-trend up"><i class="fa-solid fa-arrow-trend-up"></i> 8%</div>
+          </div>
+          <div class="stat-card" style="--accent:#f59e0b">
+            <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="stat-info">
+              <span class="stat-value">0.3s</span>
+              <span class="stat-label">Avg. Speed</span>
+            </div>
+            <div class="stat-trend up"><i class="fa-solid fa-arrow-trend-up"></i> Fast</div>
+          </div>
+          <div class="stat-card" style="--accent:#10b981">
+            <div class="stat-icon"><i class="fa-solid fa-hard-drive"></i></div>
+            <div class="stat-info">
+              <span class="stat-value">2.1 GB</span>
+              <span class="stat-label">Storage Used</span>
+            </div>
+            <div class="stat-trend down"><i class="fa-solid fa-arrow-trend-down"></i> 5%</div>
+          </div>
+        </div>
+
+        <!-- Quick Convert + Recent -->
+        <div class="dashboard-grid">
+          <!-- Quick Convert -->
+          <div class="card quick-convert-card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Quick Convert</h2>
+            </div>
+            <div class="drop-zone" id="dashDropZone">
+              <div class="drop-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+              <p>Drag & drop your image here</p>
+              <small>or</small>
+              <label class="btn btn-primary" for="dashFileInput">
+                <i class="fa-solid fa-folder-open"></i> Browse File
+              </label>
+              <input type="file" id="dashFileInput" accept="image/*" hidden/>
+            </div>
+            <div class="format-selector">
+              <span>Convert to:</span>
+              <div class="format-chips">
+                <button class="chip active" data-fmt="png">PNG</button>
+                <button class="chip" data-fmt="jpeg">JPG</button>
+                <button class="chip" data-fmt="webp">WEBP</button>
+                <button class="chip" data-fmt="bmp">BMP</button>
+                <button class="chip" data-fmt="gif">GIF</button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-full" id="dashConvertBtn" disabled>
+              <i class="fa-solid fa-rotate"></i> Convert Now
+            </button>
+          </div>
+
+          <!-- Recent Conversions -->
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</h2>
+              <button class="btn btn-ghost" id="clearHistory">Clear</button>
+            </div>
+            <div class="recent-list" id="recentList">
+              <div class="empty-state">
+                <i class="fa-solid fa-inbox"></i>
+                <p>No conversions yet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Supported Formats -->
+        <div class="card">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-shapes"></i> Supported Formats</h2>
+          </div>
+          <div class="formats-grid">
+            <div class="format-badge"><span>PNG</span><small>Lossless</small></div>
+            <div class="format-badge"><span>JPG</span><small>Lossy</small></div>
+            <div class="format-badge"><span>WEBP</span><small>Modern</small></div>
+            <div class="format-badge"><span>BMP</span><small>Bitmap</small></div>
+            <div class="format-badge"><span>GIF</span><small>Animated</small></div>
+            <div class="format-badge"><span>DATA URL</span><small>Base64</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONVERT PAGE -->
+      <section class="page" id="page-convert">
+        <div class="page-header">
+          <h1>Convert Image</h1>
+          <p>Upload, configure, and download in seconds.</p>
+        </div>
+
+        <div class="convert-layout">
+          <div class="card upload-card">
+            <div class="card-header"><h2>Upload Image</h2></div>
+            <div class="drop-zone large" id="mainDropZone">
+              <div class="drop-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+              <p>Drag & drop your image here</p>
+              <small>PNG, JPG, WEBP, BMP, GIF up to 20MB</small>
+              <label class="btn btn-primary" for="mainFileInput">
+                <i class="fa-solid fa-folder-open"></i> Choose File
+              </label>
+              <input type="file" id="mainFileInput" accept="image/*" hidden/>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display:none">
+              <div class="preview-box">
+                <img id="previewImg" src="" alt="Preview"/>
+                <button class="remove-btn" id="removeFile"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="file-meta" id="fileMeta"></div>
+            </div>
+          </div>
+
+          <div class="card settings-card">
+            <div class="card-header"><h2>Settings</h2></div>
+
+            <div class="setting-group">
+              <label>Output Format</label>
+              <div class="format-grid">
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="png" checked/> PNG
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="jpeg"/> JPG
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="webp"/> WEBP
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="bmp"/> BMP
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="gif"/> GIF
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="fmt" value="dataurl"/> DATA URL
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-group" id="qualityGroup">
+              <label>Quality: <strong id="qualityVal">90</strong>%</label>
+              <input type="range" id="qualityRange" min="10" max="100" value="90" class="range-input"/>
+            </div>
+
+            <div class="setting-group">
+              <label>Resize (optional)</label>
+              <div class="resize-inputs">
+                <input type="number" id="resizeW" placeholder="Width px" class="input-field"/>
+                <span>×</span>
+                <input type="number" id="resizeH" placeholder="Height px" class="input-field"/>
+              </div>
+              <label class="checkbox-label">
+                <input type="checkbox" id="keepRatio" checked/>
+                <span>Keep aspect ratio</span>
+              </label>
+            </div>
+
+            <button class="btn btn-primary btn-full" id="mainConvertBtn" disabled>
+              <i class="fa-solid fa-rotate"></i> Convert
+            </button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="card result-card" id="resultCard" style="display:none">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-circle-check" style="color:#10b981"></i> Conversion Complete</h2>
+          </div>
+          <div class="result-body">
+            <div class="result-preview">
+              <img id="resultImg" src="" alt="Result"/>
+            </div>
+            <div class="result-actions">
+              <div class="result-meta" id="resultMeta"></div>
+              <button class="btn btn-success" id="downloadBtn">
+                <i class="fa-solid fa-download"></i> Download
+              </button>
+              <button class="btn btn-ghost" id="copyUrlBtn">
+                <i class="fa-solid fa-copy"></i> Copy Data URL
+              </button>
+              <div class="url-box" id="urlBox" style="display:none">
+                <textarea id="urlText" readonly rows="4"></textarea>
+                <button class="btn btn-ghost btn-sm" id="copyUrlInner">
+                  <i class="fa-solid fa-clipboard"></i> Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY PAGE -->
+      <section class="page" id="page-history">
+        <div class="page-header">
+          <h1>Conversion History</h1>
+          <p>All your past conversions in one place.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2>All Conversions</h2>
+            <button class="btn btn-ghost" id="clearHistoryFull">Clear All</button>
+          </div>
+          <div id="historyTable">
+            <div class="empty-state">
+              <i class="fa-solid fa-inbox"></i>
+              <p>No history yet</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BATCH PAGE -->
+      <section class="page" id="page-batch">
+        <div class="page-header">
+          <h1>Batch Convert</h1>
+          <p>Convert multiple images at once.</p>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>Upload Multiple Files</h2></div>
+          <div class="drop-zone large" id="batchDropZone">
+            <div class="drop-icon"><i class="fa-solid fa-layer-group"></i></div>
+            <p>Drag & drop multiple images</p>
+            <label class="btn btn-primary" for="batchFileInput">
+              <i class="fa-solid fa-folder-open"></i> Choose Files
+            </label>
+            <input type="file" id="batchFileInput" accept="image/*" multiple hidden/>
+          </div>
+          <div id="batchList" class="batch-list"></div>
+          <div class="batch-controls" id="batchControls" style="display:none">
+            <div class="setting-group inline">
+              <label>Convert all to:</label>
+              <select id="batchFmt" class="select-field">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPG</option>
+                <option value="webp">WEBP</option>
+                <option value="bmp">BMP</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="batchConvertBtn">
+              <i class="fa-solid fa-rotate"></i> Convert All
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPRESS PAGE -->
+      <section class="page" id="page-compress">
+        <div class="page-header">
+          <h1>Compress Image</h1>
+          <p>Reduce file size while maintaining quality.</p>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>Upload to Compress</h2></div>
+          <div class="drop-zone large" id="compressDropZone">
+            <div class="drop-icon"><i class="fa-solid fa-compress"></i></div>
+            <p>Drop an image to compress</p>
+            <label class="btn btn-primary" for="compressFileInput">
+              <i class="fa-solid fa-folder-open"></i> Choose File
+            </label>
+            <input type="file" id="compressFileInput" accept="image/*" hidden/>
+          </div>
+          <div class="compress-result" id="compressResult" style="display:none">
+            <div class="compress-stats">
+              <div class="cstat">
+                <span>Original</span>
+                <strong id="origSize">-</strong>
+              </div>
+              <div class="cstat-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+              <div class="cstat">
+                <span>Compressed</span>
+                <strong id="compSize">-</strong>
+              </div>
+              <div class="cstat saved">
+                <span>Saved</span>
+                <strong id="savedPct">-</strong>
+              </div>
+            </div>
+            <button class="btn btn-success" id="downloadCompressed">
+              <i class="fa-solid fa-download"></i> Download Compressed
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS PAGE -->
+      <section class="page" id="page-settings">
+        <div class="page-header">
+          <h1>Settings</h1>
+          <p>Customize your experience.</p>
+        </div>
+        <div class="settings-layout">
+          <div class="card">
+            <div class="card-header"><h2>Preferences</h2></div>
+            <div class="setting-group">
+              <label>Default Output Format</label>
+              <select class="select-field" id="defaultFmt">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPG</option>
+                <option value="webp">WEBP</option>
+              </select>
+            </div>
+            <div class="setting-group">
+              <label>Default Quality</label>
+              <input type="range" id="defaultQuality" min="10" max="100" value="90" class="range-input"/>
+              <small>Current: <span id="defaultQualityVal">90</span>%</small>
+            </div>
+            <div class="setting-group">
+              <label class="toggle-label">
+                <span>Dark Mode</span>
+                <div class="toggle" id="darkModeToggle">
+                  <div class="toggle-knob"></div>
+                </div>
+              </label>
+            </div>
+            <div class="setting-group">
+              <label class="toggle-label">
+                <span>Auto-download after conversion</span>
+                <div class="toggle active" id="autoDownload">
+                  <div class="toggle-knob"></div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h2>About</h2></div>
+            <div class="about-info">
+              <div class="about-logo">
+                <i class="fa-solid fa-images"></i>
+              </div>
+              <h3>ImgConvert Pro</h3>
+              <p>Version 1.0.0</p>
+              <p>A fast, modern, browser-based image converter. No uploads to server — everything stays on your device.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
